@@ -13,17 +13,17 @@ BEGIN
 	O_RES_ID:=NULL;
 
 	 IF I_EMAIL IS NULL THEN
-        O_RES_CODE := 100101;
+        O_RES_CODE := 100102;
         RETURN;
     END IF;
 
     IF I_PASSWORD IS NULL THEN
-        O_RES_CODE := 100102;
+        O_RES_CODE := 100103;
         RETURN;
     END IF;
 	
 	IF EXISTS (SELECT 1 FROM AUTH_SERVICE.USERS WHERE EMAIL = I_EMAIL) THEN
-		O_RES_CODE :=102103;
+		O_RES_CODE :=102102;
 		RETURN;
 	END IF;
 	INSERT INTO AUTH_SERVICE.USERS(EMAIL, PASSWORD, ROLE, IS_VERIFIED)
@@ -57,7 +57,6 @@ BEGIN
 	WHERE U.ID = I_ID;
 END;
 $$;
-
 SELECT
 	*
 FROM
@@ -105,14 +104,14 @@ BEGIN
     O_ID = NULL;
 	
 	 IF NOT EXISTS (SELECT 1 FROM FUMS.USERS WHERE ID = I_ID) THEN
-	 O_RES_CODE = 101107;
+	 O_RES_CODE = 101101;
 	 RETURN;
 	 END IF;
 	 
 	 IF I_EMAIL IS NOT NULL THEN 
 		SELECT EXISTS(SELECT 1 FROM FUMS.USERS WHERE EMAIL = I_EMAIL AND ID != I_ID) INTO EMAIL_EXISTS;
 	    IF EMAIL_EXISTS THEN
-	        O_RES_CODE = 102103; -- Error code for duplicate email
+	        O_RES_CODE = 102102; -- Error code for duplicate email
 	        RETURN; -- Exit early
 	    END IF;
 	END IF;
@@ -133,6 +132,8 @@ CALL AUTH_SERVICE.UPDATE_USER (
 	NULL, -- OUT parameter: O_RES_CODE (ignored in CALL)
 	NULL, -- OUT parameter: O_RES_ID (ignored in CALL)
 	'9078599b-e96d-4ad2-9e3e-c1c747ad4f52',
-	'DEMO1@example.com',
-	'secure1234'
+	 null,
+	null,
+	null,
+	true
 );
