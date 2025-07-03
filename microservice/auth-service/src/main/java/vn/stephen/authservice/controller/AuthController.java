@@ -20,6 +20,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, UUID>> addUser(@RequestBody RegisterRequest data, @RequestHeader(name = "Accept-Language", required = false) Locale locale) {
-        return ResponseEntity.ok(authService.register(data));
+        return ResponseEntity.ok(authService.register(data,locale));
     }
 }

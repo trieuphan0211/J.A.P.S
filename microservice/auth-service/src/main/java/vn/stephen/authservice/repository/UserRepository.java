@@ -15,6 +15,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             @Param("I_EMAIL") String email,
             @Param("I_PASSWORD") String password,
             @Param("I_ROLE") String role,
-            @Param("I_IS_VERIFIED") boolean isVerified
+            @Param("I_IS_VERIFIED") Boolean isVerified
     );
 }
