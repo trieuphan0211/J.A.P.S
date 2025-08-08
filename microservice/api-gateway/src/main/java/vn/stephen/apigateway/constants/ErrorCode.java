@@ -1,4 +1,4 @@
-package vn.stephen.authservice.constants;
+package vn.stephen.apigateway.constants;
 
 public class ErrorCode {
     public static final String UNKNOWN = "AUS-000";

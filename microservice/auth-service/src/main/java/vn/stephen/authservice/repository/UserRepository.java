@@ -6,15 +6,22 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import vn.stephen.authservice.entity.User;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
-    @Query(nativeQuery = true,value = "CALL AUTH_SERVICE.REGISTER_USER (NULL,NULL,:I_EMAIL, :I_PASSWORD, :I_ROLE, :I_IS_VERIFIED)")
+    @Query(nativeQuery = true, value = "CALL AUTH_SERVICE.REGISTER_USER (NULL,NULL,:I_EMAIL, :I_PASSWORD, :I_ROLE, :I_IS_VERIFIED)")
     Object registerUser(
             @Param("I_EMAIL") String email,
             @Param("I_PASSWORD") String password,
             @Param("I_ROLE") String role,
             @Param("I_IS_VERIFIED") Boolean isVerified
     );
+
+    @Query(nativeQuery = true, value = "SELECT * FROM AUTH_SERVICE.GET_USER_BY_EMAIL (:I_EMAIL)")
+    Optional<User> findByEmail(@Param("I_EMAIL") String email);
+
+    @Query(nativeQuery= true,value = "CALL AUTH_SERVICE.DELETE_USER(NULL,NULL,:I_ID);" )
+    Object deleteUserById(@Param("I_ID") UUID id);
 }
